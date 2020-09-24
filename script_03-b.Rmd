@@ -1,0 +1,85 @@
+---
+title: "Week 3, Day 2"
+author: "David Kane"
+output: html_document
+---
+
+Let's continue working with enrollment data.
+
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(stringr)
+library(gt)
+library(readxl)
+library(janitor)
+knitr::opts_chunk$set(echo = FALSE)
+
+# Note the changes that I made in the code from Tuesday. Try to understand them.
+# Chapter 4, which we will discuss next week explains the use of the anonymous
+# function -- the ~ str_replace() trick. Look at ?select to understand the use
+# of a colon in grad:total.
+
+sep_old <- 
+  read_excel("downloaded_data/class_enrollment_summary_by_term_9-1-2020.xlsx", 
+             skip = 3) %>% 
+  clean_names() %>% 
+  filter(! is.na(course_title)) %>% 
+  select( -instructor_full_name, -course_section_code, -(grad:total)) %>%
+  rename_with(~ str_replace(.x, "course_", "")) %>% 
+  group_by(id, title, name, department) %>% 
+  summarize(u_grad = sum(u_grad), .groups = "drop") %>% 
+  filter(u_grad > 10)
+
+
+sep_new <- 
+  read_excel("downloaded_data//class_enrollment_summary_by_term_9-22-2020.xlsx", 
+             skip = 3) %>% 
+  clean_names() %>% 
+  filter(! is.na(course_title)) %>% 
+  select( -instructor_full_name, -course_section_code, -(grad:total)) %>%
+  rename_with(~ str_replace(.x, "course_", "")) %>% 
+  group_by(id, title, name, department) %>% 
+  summarize(u_grad = sum(u_grad), .groups = "drop") %>% 
+  filter(u_grad > 10)
+```
+
+### Scene 1
+
+**Prompt:** Which classes had the biggest increases and decreases in undergraduate enrollments between September 1 and September 22? Obviously, you will need to join the two datasets which I have created for you above.
+
+a) Make a table using **gt** which shows the five courses with the biggest increase. Use the [How to make a table](https://davidkane9.github.io/PPBDS/tools.html#how-to-make-a-table) section of *The Primer*.
+
+b) Make a table using **gt** which shows the five courses with the biggest decrease.
+
+c) Make a nice looking graphic which shows these 10 courses.
+
+d) Write down some thoughts about what might explain these increases and decreases. Or is it all just random? How would we know?
+
+See [here](https://rpubs.com/dkane/week-3) for my answers. No need to copy exactly what I have done! Make yours better.
+
+
+
+## Scene 2
+
+**Prompt:** Dean Amanda Claybaugh is worried about that the amount of work that some classes assigned in the first few weeks of class. Describe an ideal Preceptor Table with no missing data which would allow us to investigate this situation. What data is missing and why? With our actual Preceptor Table, how might we investigate the effect of work assigned in the first two weeks? Would the estimated Average Treatment Effect be accurate? Why or why not?
+
+Make a spreadsheet --- I recommend using Google sheets, but anything will do --- which shows a simple version of that Preceptor Table. What are the units? What are the outcomes? What is the treatment? What is the causal effect?
+
+## Scene 3
+
+**Prompt:** Dean Claybaugh does a survey and discovers that 100 of the 500 courses at Harvard gave "lots" of work in the first weeks of class and 400 of the courses gave a "normal" amount of work.
+
+Describe, in words, how you would estimate the Average Treatment Effect. 
+
+Describe why this estimate might be a very bad estimate of the true Average Treatment effect.
+
+### Scene 4
+
+**Prompt:** Create a scatterplot of the length of course name versus enrollment for the Computer Science and Economics Department. Use `nchar()` to find the length, and include spaces. Add a linear line of best fit on your plot and scale axes appropriately.
+
+
+### Scene 5
+
+**Prompt:** Use the stringr library to find the 10 most common first names of instructors and plot them. 
+
