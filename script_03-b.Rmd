@@ -59,69 +59,7 @@ d) Write down some thoughts about what might explain these increases and decreas
 See [here](https://rpubs.com/dkane/week-3) for my answers. No need to copy exactly what I have done! Make yours better.
 
 
-```{r s1}
-# Create a new object in which to store your merged datasets. left_join() will
-# be the appropriate join to use here, and use the suffix argument to clearly
-# indicate which columns are from which dataset. Note that it is common to name
-# the main dataset that you will work with over the course of an analysis x.
 
-x <- left_join(sep_old, sep_new, 
-               by = c("id", "title", "name", "department"),   
-               suffix = c("_old", "_new")) %>% 
-  mutate(change = u_grad_new - u_grad_old)
-
-# Here I have created two separate tibbles to find the top 5 courses with the
-# greatest enrollment increase and the top 5 courses with the greatest
-# enrollment decrease. I will feed this into gt. I could use slice(1:5) as well.
-
-top_inc <- x %>% 
-  select(title, name, u_grad_new, change) %>% 
-  arrange(desc(change)) %>% 
-  slice_head(n = 5)
-
-top_dec <- x %>% 
-  select(title, name, u_grad_new, change) %>% 
-  arrange(change) %>% 
-  slice_head(n = 5) 
-
-# then, I join together those tibbles using full_join which simply puts all rows
-# from both datasets into one. however, you will have to reorder your courses
-# again when doing ggplot using reorder()
-
-p <- full_join(top_inc, top_dec,
-               by = c("title", "name", 
-                      "u_grad_new", "change")) %>% 
-  ggplot(mapping = aes(x = reorder(name, change), y = change)) +
-  geom_col() +
-  coord_flip() +
-  labs(y = "Change in Enrollment",
-       title = "Courses with Greatest Increase and Decrease in Enrollment") +
-  theme(axis.title.y = element_blank())
-```
-
-```{r s1-tables}
-top_inc %>% 
-  gt() %>% 
-    tab_header(title = "Biggests Increases in Enrollment") %>% 
-    cols_label(title = "Number",
-               name = "Title",
-               u_grad_new = "Enrollment",
-               change = "Change") %>% 
-    tab_source_note("Harvard Register")
-
-top_dec %>% 
-  gt() %>% 
-    tab_header(title = "Biggests Decreases in Enrollment") %>% 
-    cols_label(title = "Number",
-               name = "Title",
-               u_grad_new = "Enrollment",
-               change = "Change") %>% 
-    tab_source_note("Harvard Register")
-```
-
-```{r s1-plot}
-p
-```
 
 
 ## Scene 2
