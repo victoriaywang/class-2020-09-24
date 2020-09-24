@@ -62,9 +62,11 @@ See [here](https://rpubs.com/dkane/week-3) for my answers. No need to copy exact
 
 ## Scene 2
 
-**Prompt:** Dean Amanda Claybaugh is worried about that the amount of work that some classes assigned in the first few weeks of class. Describe an ideal Preceptor Table with no missing data which would allow us to investigate this situation. What data is missing and why? With our actual Preceptor Table, how might we investigate the effect of work assigned in the first two weeks? Would the estimated Average Treatment Effect be accurate? Why or why not?
+**Prompt:** Dean Amanda Claybaugh is worried that the amount of work that some classes assigned in the first few weeks of class. Describe an ideal Preceptor Table with no missing data which would allow us to investigate this situation. What data is missing and why? 
 
-Make a spreadsheet --- I recommend using Google sheets, but anything will do --- which shows a simple version of that Preceptor Table. What are the units? What are the outcomes? What is the treatment? What is the causal effect?
+With our actual Preceptor Table, how might we investigate the effect of work assigned in the first two weeks? Would the estimated Average Treatment Effect be accurate? Why or why not?
+
+Make a spreadsheet --- I recommend using Google sheets, but anything will do --- which shows a simple version of that actual Preceptor Table. What are the units? What are the outcomes? What is the treatment? What is the causal effect? You may assign whichever of the 10 classes you like to treatment and the rest to control.
 
 ## Scene 3
 
@@ -75,6 +77,8 @@ Describe, in words, how you would estimate the Average Treatment Effect.
 Describe why this estimate might be a very bad estimate of the true Average Treatment effect.
 
 ### Scene 4
+
+(I don't expect to get to these last two scenes but, if your group is ahead, give them a shot.)
 
 **Prompt:** Create a scatterplot of the length of course name versus enrollment for the Computer Science and Economics Department. Use `nchar()` to find the length, and include spaces. Add a linear line of best fit on your plot and scale axes appropriately.
 
